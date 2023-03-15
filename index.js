@@ -1,6 +1,7 @@
 const startUpDebugger = require("debug")("app:startup");
 const dbDebagger = require("debug")("app:db");
 const express = require("express");
+const db = require("./db/connection");
 const genres = require("./routes/genres");
 const home = require("./routes/home");
 const Joi = require("joi");
