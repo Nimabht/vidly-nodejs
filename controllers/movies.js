@@ -27,7 +27,7 @@ module.exports = {
         const ex = new AppError(
           error.details[0].message,
           "fail",
-          404
+          400
         );
         return next(ex);
       }
@@ -39,7 +39,7 @@ module.exports = {
       const movie = new Movie({
         title: req.body.title,
         genre: {
-          _id: genre.id,
+          _id: genre._id,
           name: genre.name,
         },
         numberInStock: req.body.numberInStock,
