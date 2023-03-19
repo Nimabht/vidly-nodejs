@@ -4,6 +4,7 @@ const express = require("express");
 const db = require("./db/connection");
 const genres = require("./routes/genres");
 const users = require("./routes/users");
+const movies = require("./routes/movies");
 const home = require("./routes/home");
 const morgan = require("morgan");
 const globalErrorHandler = require("./middleware/globalErrorHandler");
@@ -15,6 +16,7 @@ app.set("views", "./views");
 app.use(express.json());
 app.use("/api/genres", genres);
 app.use("/api/users", users);
+app.use("/api/movies", movies);
 app.use("/", home);
 
 if (app.get("env") === "development") {

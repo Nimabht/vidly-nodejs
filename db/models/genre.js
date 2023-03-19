@@ -12,5 +12,6 @@ function validateGenre(genre) {
   return schema.validate(genre);
 }
 
+exports.genreSchema = genreSchema;
 exports.Genre = mongoose.model("Genre", genreSchema);
 exports.validateGenre = validateGenre;
