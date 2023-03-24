@@ -45,8 +45,8 @@ module.exports = {
         numberInStock: req.body.numberInStock,
         dailyRentalRate: req.body.dailyRentalRate,
       });
-      const newMovie = await movie.save();
-      res.status(201).send(newMovie);
+      await movie.save();
+      res.status(201).send(movie);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);

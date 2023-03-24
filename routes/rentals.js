@@ -1,11 +1,11 @@
 const express = require("express");
 const {
   getRentals,
-  createRentals,
+  createRental,
 } = require("../controllers/rentals");
 const router = express.Router();
 
 router.get("/", getRentals);
-router.post("/", createRentals);
+router.post("/", createRental);
 
 module.exports = router;

@@ -33,8 +33,8 @@ module.exports = {
       const genre = new Genre({
         name: req.body.name,
       });
-      const newGenre = await genre.save();
-      res.status(201).send(newGenre);
+      await genre.save();
+      res.status(201).send(genre);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);

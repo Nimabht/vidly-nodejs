@@ -35,8 +35,8 @@ module.exports = {
         phone: +req.body.phone || null,
         isGold: req.body.isGold,
       });
-      const newUser = await user.save();
-      res.status(201).send(newUser);
+      await user.save();
+      res.status(201).send(user);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);

@@ -1,3 +1,5 @@
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 const startUpDebugger = require("debug")("app:startup");
 const dbDebagger = require("debug")("app:db");
 const express = require("express");
