@@ -22,8 +22,6 @@ const userSchema = mongoose.Schema({
     required: true,
     minlength: 8,
     maxlength: 1024,
-    match:
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
   },
 });
 
@@ -31,13 +29,7 @@ function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().min(4).max(50).required(),
     email: Joi.string().min(4).max(255).email().required(),
-    password: Joi.string()
-      .min(8)
-      .max(255)
-      .pattern(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-      )
-      .required(),
+    password: Joi.string().min(8).max(255).required(),
   });
   return schema.validate(user);
 }

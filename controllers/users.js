@@ -1,6 +1,6 @@
-const { User, validateUser } = require("../db/models/users");
+const { User, validateUser } = require("../db/models/user");
 const { AppError } = require("../utils/appError");
-
+const bcrypt = require("bcrypt");
 module.exports = {
   getUsers: async (req, res, next) => {
     try {
@@ -44,8 +44,11 @@ module.exports = {
         email: req.body.email,
         password: req.body.password,
       });
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(user.password, salt);
       await user.save();
-      res.status(201).send(user);
+      const { _id, name, email } = user;
+      res.status(201).send({ _id, name, email });
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
