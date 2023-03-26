@@ -1,6 +1,5 @@
+const Joi = require("Joi");
 const mongoose = require("mongoose");
-const Joi = require("joi");
-const { string } = require("joi");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -28,11 +27,12 @@ const userSchema = mongoose.Schema({
   },
 });
 
-const validateUser = (user) => {
+function validateUser(user) {
   const schema = Joi.object({
-    name: string().min(4).max(50).required(),
-    email: string().min(4).max(255).email().required(),
-    password: min(8)
+    name: Joi.string().min(4).max(50).required(),
+    email: Joi.string().min(4).max(255).email().required(),
+    password: Joi.string()
+      .min(8)
       .max(255)
       .pattern(
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
@@ -40,7 +40,7 @@ const validateUser = (user) => {
       .required(),
   });
   return schema.validate(user);
-};
+}
 
 exports.User = mongoose.model("User", userSchema);
 exports.validateUser = validateUser;

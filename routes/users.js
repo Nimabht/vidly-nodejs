@@ -15,4 +15,4 @@ router.post("/", createUser);
 // router.put("/:id", getUser, updateUser);
 // router.delete("/:id", deleteUser);
 
-exports = router;
+module.exports = router;
