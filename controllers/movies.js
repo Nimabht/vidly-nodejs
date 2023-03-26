@@ -55,7 +55,7 @@ module.exports = {
   updateMovie: async (req, res, next) => {
     const { error } = validateMovie(req.body);
     if (!!error) {
-      const ex = new AppError(error.details[0].message, "fail", 404);
+      const ex = new AppError(error.details[0].message, "fail", 400);
       return next(ex);
     }
     const movie = req.movie;

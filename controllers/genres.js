@@ -26,7 +26,7 @@ module.exports = {
         const ex = new AppError(
           error.details[0].message,
           "fail",
-          404
+          400
         );
         return next(ex);
       }
@@ -43,7 +43,7 @@ module.exports = {
   updateGenre: async (req, res) => {
     const { error } = validateGenre(req.body);
     if (!!error) {
-      const ex = new AppError(error.details[0].message, "fail", 404);
+      const ex = new AppError(error.details[0].message, "fail", 400);
       return next(ex);
     }
     const genre = req.genre;

@@ -29,7 +29,7 @@ module.exports = {
         const ex = new AppError(
           error.details[0].message,
           "fail",
-          404
+          400
         );
         return next(ex);
       }
@@ -48,7 +48,7 @@ module.exports = {
   updateCustomer: async (req, res) => {
     const { error } = validateCustomer(req.body);
     if (!!error) {
-      const ex = new AppError(error.details[0].message, "fail", 404);
+      const ex = new AppError(error.details[0].message, "fail", 400);
       return next(ex);
     }
     const customer = req.customer;
