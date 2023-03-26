@@ -1,3 +1,4 @@
+const config = require("config");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const startUpDebugger = require("debug")("app:startup");
@@ -14,6 +15,11 @@ const auth = require("./routes/auth");
 const morgan = require("morgan");
 const globalErrorHandler = require("./middleware/globalErrorHandler");
 const app = express();
+
+if (!config.get("jwtPrivateKey")) {
+  console.log("FATAL ERROR: jwtPrivateKey is not defined.");
+  process.exit(1);
+}
 
 app.set("view engine", "pug");
 app.set("views", "./views");

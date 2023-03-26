@@ -1,3 +1,4 @@
+const config = require("config");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { User } = require("../db/models/user");
@@ -35,7 +36,10 @@ router.post("/", async (req, res, next) => {
       );
       return next(ex);
     }
-    const token = jwt.sign({ _id: user._id }, "hardCodedSecret");
+    const token = jwt.sign(
+      { _id: user._id },
+      config.get("jwtPrivateKey")
+    );
     res.send(token);
   } catch (error) {
     const ex = new AppError(error.message, "error", 500);
