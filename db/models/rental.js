@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Rental = mongoose.model(
   "Rental",
   new mongoose.Schema({
-    user: {
+    customer: {
       type: new mongoose.Schema({
         name: {
           type: String,
@@ -58,7 +58,7 @@ const Rental = mongoose.model(
 
 function validateRental(rental) {
   const schema = Joi.object({
-    userId: Joi.objectId().required(),
+    customerId: Joi.objectId().required(),
     movieId: Joi.objectId().required(),
   });
 

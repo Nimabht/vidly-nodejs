@@ -1,27 +1,30 @@
 const { AppError } = require("../utils/appError");
-const { User, validateUser } = require("../db/models/user");
+const {
+  Customer,
+  validateCustomer,
+} = require("../db/models/customer");
 
 module.exports = {
-  getUsers: async (req, res, next) => {
+  getCustomers: async (req, res, next) => {
     try {
-      const users = await User.find().sort("name");
-      res.send(users);
+      const customers = await Customer.find().sort("name");
+      res.send(customers);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
     }
   },
-  getUserById: async (req, res, next) => {
+  getCustomerById: async (req, res, next) => {
     try {
-      res.send(req.user);
+      res.send(req.customer);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
     }
   },
-  createUser: async (req, res, next) => {
+  createCustomer: async (req, res, next) => {
     try {
-      const { error } = validateUser(req.body);
+      const { error } = validateCustomer(req.body);
       if (!!error) {
         const ex = new AppError(
           error.details[0].message,
@@ -30,31 +33,31 @@ module.exports = {
         );
         return next(ex);
       }
-      const user = new User({
+      const customer = new Customer({
         name: req.body.name,
         phone: +req.body.phone || null,
         isGold: req.body.isGold,
       });
-      await user.save();
-      res.status(201).send(user);
+      await customer.save();
+      res.status(201).send(customer);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
     }
   },
-  updateUser: async (req, res) => {
-    const { error } = validateUser(req.body);
+  updateCustomer: async (req, res) => {
+    const { error } = validateCustomer(req.body);
     if (!!error) {
       const ex = new AppError(error.details[0].message, "fail", 404);
       return next(ex);
     }
-    const user = req.user;
-    user.set({
+    const customer = req.customer;
+    customer.set({
       name: req.body.name,
       phone: +req.body.phone,
       isGold: req.body.isGold,
     });
-    const result = await user.save();
+    const result = await customer.save();
     res.send(result);
     try {
     } catch (error) {
@@ -62,14 +65,16 @@ module.exports = {
       return next(ex);
     }
   },
-  deleteUser: async (req, res) => {
+  deleteCustomer: async (req, res) => {
     try {
-      const user = await User.findByIdAndDelete(req.params.id);
-      if (!user) {
-        const ex = new AppError("User not found", "fail", 404);
+      const customer = await Customer.findByIdAndDelete(
+        req.params.id
+      );
+      if (!customer) {
+        const ex = new AppError("Customer not found", "fail", 404);
         return next(ex);
       }
-      res.send(user);
+      res.send(customer);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);

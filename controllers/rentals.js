@@ -1,6 +1,6 @@
 const { Rental, validateRental } = require("../db/models/rental");
 const { AppError } = require("../utils/appError");
-const { User } = require("../db/models/user");
+const { Customer } = require("../db/models/customer");
 const { Movie } = require("../db/models/movie");
 
 module.exports = {
@@ -20,9 +20,9 @@ module.exports = {
       return next(ex);
     }
     try {
-      const user = await User.findById(req.body.userId);
-      if (!user) {
-        const ex = new AppError("Invalid user.", "fail", 400);
+      const customer = await Customer.findById(req.body.customerId);
+      if (!customer) {
+        const ex = new AppError("Invalid Customer.", "fail", 400);
         return next(ex);
       }
       const movie = await Movie.findById(req.body.movieId);
@@ -35,11 +35,11 @@ module.exports = {
         return next(ex);
       }
       const rental = new Rental({
-        user: {
-          _id: user._id,
-          name: user.name,
-          isGold: user.isGold,
-          phone: user.phone,
+        customer: {
+          _id: customer._id,
+          name: customer.name,
+          isGold: customer.isGold,
+          phone: customer.phone,
         },
         movie: {
           _id: movie._id,

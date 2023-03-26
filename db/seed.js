@@ -1,6 +1,6 @@
 const db = require("./connection");
-const Genre = require("./genre");
-const User = require("./user");
+const { Genre } = require("./models/genre");
+const { Customer } = require("./models/customer");
 const genres = [
   {
     name: "Horror",
@@ -13,7 +13,7 @@ const genres = [
   },
 ];
 
-const user = {
+const customer = {
   name: "Admin",
   phone: "09355401204",
   isGold: true,
@@ -21,9 +21,9 @@ const user = {
 async function seed() {
   try {
     await Genre.deleteMany();
-    await User.deleteMany();
+    await Customer.deleteMany();
     await Genre.insertMany(genres);
-    await User.insertMany([user]);
+    await Customer.insertMany([customer]);
     console.log("Database seeded");
     process.exit();
   } catch (err) {
