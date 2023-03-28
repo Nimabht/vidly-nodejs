@@ -3,7 +3,6 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const startUpDebugger = require("debug")("app:startup");
 const dbDebagger = require("debug")("app:db");
-const express = require("express");
 const db = require("./db/connection");
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
@@ -14,8 +13,9 @@ const home = require("./routes/home");
 const auth = require("./routes/auth");
 const morgan = require("morgan");
 const globalErrorHandler = require("./middleware/globalErrorHandler");
+const express = require("express");
+//--------------------------------------------------------------------------
 const app = express();
-
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.");
   process.exit(1);

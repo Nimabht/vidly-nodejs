@@ -36,10 +36,7 @@ router.post("/", async (req, res, next) => {
       );
       return next(ex);
     }
-    const token = jwt.sign(
-      { _id: user._id },
-      config.get("jwtPrivateKey")
-    );
+    const token = user.generateAuthToken();
     res.send(token);
   } catch (error) {
     const ex = new AppError(error.message, "error", 500);

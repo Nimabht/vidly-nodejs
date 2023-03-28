@@ -47,8 +47,12 @@ module.exports = {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(user.password, salt);
       await user.save();
+      const token = user.generateAuthToken();
       const { _id, name, email } = user;
-      res.status(201).send({ _id, name, email });
+      res
+        .status(201)
+        .header("x-auth-token", token)
+        .send({ _id, name, email });
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
