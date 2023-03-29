@@ -41,18 +41,22 @@ module.exports = {
     }
   },
   updateGenre: async (req, res) => {
-    const { error } = validateGenre(req.body);
-    if (!!error) {
-      const ex = new AppError(error.details[0].message, "fail", 400);
-      return next(ex);
-    }
-    const genre = req.genre;
-    genre.set({
-      name: req.body.name,
-    });
-    const result = await genre.save();
-    res.send(result);
     try {
+      const { error } = validateGenre(req.body);
+      if (!!error) {
+        const ex = new AppError(
+          error.details[0].message,
+          "fail",
+          400
+        );
+        return next(ex);
+      }
+      const genre = req.genre;
+      genre.set({
+        name: req.body.name,
+      });
+      const result = await genre.save();
+      res.send(result);
     } catch (error) {
       const ex = new AppError(error.message, "error", 500);
       return next(ex);
