@@ -1,3 +1,4 @@
+const asyncMiddleware = require("../middleware/async");
 const express = require("express");
 const {
   getUsers,
@@ -11,7 +12,7 @@ const router = express.Router();
 
 // router.get("/", getUsers);
 // router.get("/:id", getUser, getUserById);
-router.post("/", createUser);
+router.post("/", asyncMiddleware(createUser));
 // router.put("/:id", getUser, updateUser);
 // router.delete("/:id", deleteUser);
 

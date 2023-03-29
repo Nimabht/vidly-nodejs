@@ -1,3 +1,4 @@
+const asyncMiddleware = require("../middleware/async");
 const auth = require("../middleware/auth");
 const express = require("express");
 const getMovie = require("../middleware/getMovie");
@@ -11,10 +12,10 @@ const {
 
 const router = express.Router();
 
-router.get("/", getMovies);
-router.get("/:id", getMovie, getMovieById);
-router.post("/", auth, createMovie);
-router.put("/:id", auth, getMovie, updateMovie);
-router.delete("/:id", auth, deleteMovie);
+router.get("/", asyncMiddleware(getMovies));
+router.get("/:id", getMovie, asyncMiddleware(getMovieById));
+router.post("/", auth, asyncMiddleware(createMovie));
+router.put("/:id", auth, getMovie, asyncMiddleware(updateMovie));
+router.delete("/:id", auth, asyncMiddleware(updateMovie));
 
 module.exports = router;

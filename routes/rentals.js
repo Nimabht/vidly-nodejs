@@ -1,3 +1,4 @@
+const asyncMiddleware = require("../middleware/async");
 const express = require("express");
 const {
   getRentals,
@@ -6,7 +7,7 @@ const {
 const auth = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/", getRentals);
-router.post("/", auth, createRental);
+router.get("/", asyncMiddleware(getRentals));
+router.post("/", auth, asyncMiddleware(createRental));
 
 module.exports = router;
