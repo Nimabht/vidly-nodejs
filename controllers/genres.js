@@ -3,6 +3,7 @@ const { Genre, validateGenre } = require("../db/models/genre");
 
 module.exports = {
   getGenres: async (req, res, next) => {
+    throw new Error("bashe");
     const genres = await Genre.find().sort("name");
     res.send(genres);
   },
