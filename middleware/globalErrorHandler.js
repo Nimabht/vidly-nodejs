@@ -1,4 +1,5 @@
 const winston = require("winston");
+require("winston-mongodb");
 const path = require("path");
 const options = {
   file: {
@@ -21,12 +22,17 @@ const options = {
       winston.format.prettyPrint()
     ),
   },
+  dataBase: {
+    level: "error",
+    db: "mongodb://localhost/vidly-nodejs",
+  },
 };
 
 const logger = winston.createLogger({
   transports: [
     new winston.transports.File(options.file),
     new winston.transports.Console(options.console),
+    new winston.transports.MongoDB(options.dataBase),
   ],
   exitOnError: false, // do not exit on handled exceptions
 });
@@ -36,7 +42,7 @@ module.exports = (Error, req, res, next) => {
     !Error.statusCode ||
     Error.statusCode.toString().startsWith("5")
   ) {
-    logger.error("", Error);
+    logger.error(Error.message, { metadata: { prop: Error } });
   }
   res.status(Error.statusCode || 500);
   res.send({
